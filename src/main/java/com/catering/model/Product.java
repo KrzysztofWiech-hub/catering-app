@@ -32,6 +32,8 @@ public class Product {
 
     private double weight;
 
+//    test for check branch name
+
 //    @OneToMany(mappedBy = "product")
 //    private DaysOfWeek daysOfWeek;
 
