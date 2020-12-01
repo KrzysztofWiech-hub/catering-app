@@ -14,25 +14,15 @@ import javax.persistence.*;
 public class DaysOfWeek {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Enumerated(EnumType.ORDINAL)
-    private Days dayId;
+//    @Enumerated(EnumType.ORDINAL)
+//    private Days dayId;
 
     @Enumerated(EnumType.STRING)
     private Days dayName;
 
     @JsonIgnore
-    @ManyToOne()
-    @JoinColumn(name = "product_id")
-    private Product product;
-
-//    private String monday;
-//    private String tuesday;
-//    private String wednesday;
-//    private String thursday;
-//    private String friday;
-//    private String saturday;
-//    private String sunday;
-
+    private Integer productId;
 }

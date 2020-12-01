@@ -2,10 +2,9 @@ package com.catering.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import javax.validation.constraints.NotNull;
 
 import javax.persistence.*;
-import java.util.List;
+import javax.validation.constraints.NotNull;
 
 @Setter
 @Getter
@@ -15,7 +14,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     @NotNull(message = "Name may not be null")
     private String name;
@@ -31,8 +30,5 @@ public class Product {
     private double height;
 
     private double weight;
-
-//    @OneToMany(mappedBy = "product")
-//    private DaysOfWeek daysOfWeek;
 
 }
