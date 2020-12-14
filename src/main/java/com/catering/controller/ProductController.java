@@ -20,19 +20,35 @@ public class ProductController {
     @PostMapping(value = "/product")
     public ResponseEntity addProduct(@RequestBody Product product) {
         productService.addProduct(product);
-        return ResponseEntity.ok().body(product);
+        return ResponseEntity.ok(product);
     }
 
     @PutMapping(value = "/product/{productId}/day/{dayName}")
     public ResponseEntity addProductToDayOfWeek(@PathVariable Integer productId, @PathVariable String dayName) {
-        productValidator.checkIsProjectIdExistInDayOfWeek(productId, dayName);
+        productValidator.validateIfProductIdIsSetInDayOfWeek(productId, dayName);
         productService.addProductToDayOfWeek(productId, dayName);
-        return ResponseEntity.ok().body(productId);
+        return ResponseEntity.ok(productId);
     }
 
-    @GetMapping(value = "/product")
-    public ResponseEntity getProductByProductId(@RequestParam Integer productId) {
+    @GetMapping(value = "/product/{productId}")
+    public ResponseEntity getProductByProductId(@PathVariable Integer productId) {
+        productValidator.checkExistenceProductByProductId(productId);
         Product product = productService.getProductByProductId(productId);
-        return ResponseEntity.ok().body(product);
+        return ResponseEntity.ok(product);
+    }
+
+    @DeleteMapping(value = "/product/{productId}")
+    public ResponseEntity deleteProductByProductId(@PathVariable Integer productId) {
+        productValidator.checkExistenceProductByProductId(productId);
+        productService.deleteProductByProductId(productId);
+        return ResponseEntity.ok(productId);
+    }
+
+    @DeleteMapping(value = "/product/{productId}/day/{dayName}")
+    public ResponseEntity deleteProductFromDayOfWeek(@PathVariable Integer productId, @PathVariable String dayName) {
+        productValidator.checkExistenceProductByProductId(productId);
+        productValidator.checkExistenceProductIdInDayOfWeek(productId);
+        productService.deleteProductFromDayOfWeek(productId, dayName);
+        return ResponseEntity.ok(productId);
     }
 }

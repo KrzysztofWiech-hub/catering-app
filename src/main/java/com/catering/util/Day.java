@@ -1,6 +1,6 @@
 package com.catering.util;
 
-public enum Days {
+public enum Day {
 
     MONDAY(1, "monday"),
     TUESDAY(2, "tuesday"),
@@ -13,7 +13,7 @@ public enum Days {
     private final int id;
     private final String name;
 
-    Days(Integer id, String name) {
+    Day(Integer id, String name) {
         this.id = id;
         this.name = name;
     }

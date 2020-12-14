@@ -9,4 +9,8 @@ public interface ProductService {
     void addProductToDayOfWeek(Integer productId, String dayName);
 
     Product getProductByProductId(Integer id);
+
+    void deleteProductByProductId(int productId);
+
+    void deleteProductFromDayOfWeek(int productId, String dayOfWeek);
 }
