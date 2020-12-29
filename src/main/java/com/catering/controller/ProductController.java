@@ -1,12 +1,16 @@
 package com.catering.controller;
 
 import com.catering.model.Product;
+import com.catering.model.dayOfWeekDto.ProductDayDto;
 import com.catering.service.ProductService;
 import com.catering.validator.ProductValidator;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+import java.util.List;
+
+@Controller
 public class ProductController {
 
     private final ProductService productService;
@@ -50,5 +54,12 @@ public class ProductController {
         productValidator.checkExistenceProductIdInDayOfWeek(productId);
         productService.deleteProductFromDayOfWeek(productId, dayName);
         return ResponseEntity.ok(productId);
+    }
+
+    @GetMapping(value = "/products/day/{dayName}/list")
+    public ResponseEntity<List<ProductDayDto>> getAllProductsOfDayByDayName(@PathVariable String dayName) {
+        // TODO: 2020-12-29 finish this endpoint, fix problem with mapping object in a repository
+        List<ProductDayDto> productDayDtoList = productService.getAllProductsOfDayByDayName(dayName);
+        return ResponseEntity.ok(productDayDtoList);
     }
 }

@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Table(name = "day_of_week")
-public class DaysOfWeek {
+public class DayOfWeek {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

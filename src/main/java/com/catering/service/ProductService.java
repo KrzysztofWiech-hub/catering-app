@@ -1,6 +1,9 @@
 package com.catering.service;
 
 import com.catering.model.Product;
+import com.catering.model.dayOfWeekDto.ProductDayDto;
+
+import java.util.List;
 
 public interface ProductService {
 
@@ -13,4 +16,7 @@ public interface ProductService {
     void deleteProductByProductId(int productId);
 
     void deleteProductFromDayOfWeek(int productId, String dayOfWeek);
+
+    List<ProductDayDto> getAllProductsOfDayByDayName(String dayName);
+
 }

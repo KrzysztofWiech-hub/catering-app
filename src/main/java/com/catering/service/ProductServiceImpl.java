@@ -1,12 +1,14 @@
 package com.catering.service;
 
 import com.catering.model.Product;
+import com.catering.model.dayOfWeekDto.ProductDayDto;
 import com.catering.repository.DaysOfWeekRepository;
 import com.catering.repository.ProductRepository;
 import com.catering.util.Day;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -71,5 +73,10 @@ public class ProductServiceImpl implements ProductService {
                 daysOfWeekRepository.deleteProductFromDaysOfWeekByProductIdAndDayName(productIOfDb, currentDayName);
             }
         }
+    }
+
+    @Override
+    public List<ProductDayDto> getAllProductsOfDayByDayName(String dayName) {
+        return daysOfWeekRepository.selectAllProductsOfDayByDayName(dayName);
     }
 }

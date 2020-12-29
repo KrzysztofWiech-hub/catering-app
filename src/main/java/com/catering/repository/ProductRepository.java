@@ -22,12 +22,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                        @Param("kcal") Double kcal, @Param("mass") Double mass, @Param("height") Double height,
                        @Param("weight") Double weight);
 
-    @Query(value = "SELECT (1) FROM cateringdb.days_of_week DAYS_OF_WEEK WHERE" +
+    @Query(value = "SELECT (1) FROM cateringdb.day_of_week DAYS_OF_WEEK WHERE" +
             " DAYS_OF_WEEK.product_id = :productId AND DAYS_OF_WEEK.day_name = :dayName",
             nativeQuery = true)
     Integer selectExistProductIdInSelectedDayOfWeek(@Param("productId") Integer productId, @Param("dayName") String dayName);
 
-    @Query(value = "SELECT (1) FROM cateringdb.days_of_week DAY_OF_WEEK WHERE" +
+    @Query(value = "SELECT (1) FROM cateringdb.day_of_week DAY_OF_WEEK WHERE" +
             " DAY_OF_WEEK.product_id = :productId",
             nativeQuery = true)
     Integer selectExistProductByProductId(@Param("productId") Integer productId);
