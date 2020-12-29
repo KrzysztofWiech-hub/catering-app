@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Query(value = "SELECT * FROM cateringdb.product WHERE product.id = :id",
+    @Query(value = "SELECT * FROM cateringdb.product PRODUCT WHERE PRODUCT.id = :id",
             nativeQuery = true)
     Product selectProductByProductId(@Param("id") Integer id);
 
@@ -22,8 +22,18 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                        @Param("kcal") Double kcal, @Param("mass") Double mass, @Param("height") Double height,
                        @Param("weight") Double weight);
 
-    @Query(value = "SELECT (1) FROM cateringdb.product, cateringdb.days_of_week WHERE" +
-            " product.id = :productId AND days_of_week.day_name = :dayName",
+    @Query(value = "SELECT (1) FROM cateringdb.day_of_week DAYS_OF_WEEK WHERE" +
+            " DAYS_OF_WEEK.product_id = :productId AND DAYS_OF_WEEK.day_name = :dayName",
             nativeQuery = true)
-    Integer selectExistProjectIdInDayOfWeek(@Param("productId") Integer productId, @Param("dayName") String dayName);
+    Integer selectExistProductIdInSelectedDayOfWeek(@Param("productId") Integer productId, @Param("dayName") String dayName);
+
+    @Query(value = "SELECT (1) FROM cateringdb.day_of_week DAY_OF_WEEK WHERE" +
+            " DAY_OF_WEEK.product_id = :productId",
+            nativeQuery = true)
+    Integer selectExistProductByProductId(@Param("productId") Integer productId);
+
+    @Modifying
+    @Query(value = "DELETE PRODUCT FROM cateringdb.product PRODUCT where PRODUCT.id = :productId",
+            nativeQuery = true)
+    void deleteProductByProductId(int productId);
 }

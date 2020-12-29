@@ -13,11 +13,31 @@ public class ProductValidator {
         this.productRepository = productRepository;
     }
 
-    public void checkIsProjectIdExistInDayOfWeek(Integer productId, String dayName) {
-        Integer existProjectId = productRepository.selectExistProjectIdInDayOfWeek(productId, dayName);
-        if (existProjectId != null) {
-            throw new ResourceNotFoundException("Chosen project is currently set to this day of week");
+    public void validateIfProductIdIsSetInDayOfWeek(Integer productId, String dayName) {
+        Integer productExistence = productRepository.selectExistProductIdInSelectedDayOfWeek(productId, dayName);
+        if (productExistence != null) {
+            throw new ResourceNotFoundException("Chosen productId is currently set to this day of week");
         }
     }
 
+    public void checkExistenceProductByProductId(Integer productId) {
+        Integer productExistence = productRepository.selectExistProductByProductId(productId);
+        if (productExistence == null) {
+            throw new ResourceNotFoundException("Chosen productId is not existed");
+        }
+    }
+
+    public void checkExistenceProductIdInDayOfWeek(Integer productId) {
+        Integer productExistence = productRepository.selectExistProductByProductId(productId);
+        if (productExistence == null) {
+            throw new ResourceNotFoundException("Chosen productId is not existed in selected day");
+        }
+    }
+
+//    public void checkExistenceProductIdInAllDaysOfWeek(Integer productId) {
+//        Integer productExistence = productRepository.selectExistProductIdInAllDaysOfWeek(productId);
+//        if (productExistence != null) {
+//            throw new ResourceNotFoundException("Chosen productId is currently set to this day of week");
+//        }
+//    }
 }

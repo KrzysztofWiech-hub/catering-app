@@ -1,12 +1,14 @@
 package com.catering.service;
 
 import com.catering.model.Product;
+import com.catering.model.dayOfWeekDto.ProductDayDto;
 import com.catering.repository.DaysOfWeekRepository;
 import com.catering.repository.ProductRepository;
-import com.catering.util.Days;
+import com.catering.util.Day;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -26,10 +28,11 @@ public class ProductServiceImpl implements ProductService {
                 product.getKcal(), product.getMass(), product.getHeight(), product.getWeight());
     }
 
+    @Transactional
     @Override
     public void addProductToDayOfWeek(Integer productId, String dayName) {
-        Days[] allDays = Days.values();
-        for (Days day : allDays) {
+        Day[] allDays = Day.values();
+        for (Day day : allDays) {
             if (day.getName().equalsIgnoreCase(dayName)) {
                 String currentDayName = day.getName();
 
@@ -43,5 +46,37 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getProductByProductId(Integer id) {
         return productRepository.selectProductByProductId(id);
+    }
+
+    @Transactional
+    @Override
+    public void deleteProductByProductId(int productId) {
+        boolean isExist = daysOfWeekRepository.existsProductById(productId);
+        if (isExist) {
+            productRepository.deleteProductByProductId(productId);
+            daysOfWeekRepository.deleteProductFromDaysOfWeek(productId);
+        } else {
+            productRepository.deleteProductByProductId(productId);
+        }
+    }
+
+    @Transactional
+    @Override
+    public void deleteProductFromDayOfWeek(int productId, String dayName) {
+        Day[] allDays = Day.values();
+        for (Day day : allDays) {
+            if (day.getName().equalsIgnoreCase(dayName)) {
+                String currentDayName = day.getName();
+
+                Product product = getProductByProductId(productId);
+                int productIOfDb = product.getId();
+                daysOfWeekRepository.deleteProductFromDaysOfWeekByProductIdAndDayName(productIOfDb, currentDayName);
+            }
+        }
+    }
+
+    @Override
+    public List<ProductDayDto> getAllProductsOfDayByDayName(String dayName) {
+        return daysOfWeekRepository.selectAllProductsOfDayByDayName(dayName);
     }
 }

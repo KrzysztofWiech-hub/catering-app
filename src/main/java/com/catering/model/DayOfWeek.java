@@ -1,6 +1,6 @@
 package com.catering.model;
 
-import com.catering.util.Days;
+import com.catering.util.Day;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,18 +10,18 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Entity
-@Table(name = "days_of_week")
-public class DaysOfWeek {
+@Table(name = "day_of_week")
+public class DayOfWeek {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
 //    @Enumerated(EnumType.ORDINAL)
-//    private Days dayId;
+//    private Day dayId;
 
     @Enumerated(EnumType.STRING)
-    private Days dayName;
+    private Day dayName;
 
     @JsonIgnore
     private Integer productId;
