@@ -1,13 +1,15 @@
 package com.catering.controller;
 
 import com.catering.model.Product;
-import com.catering.model.dayOfWeekDto.ProductDayDto;
+import com.catering.model.Response.ProductsOfDayResponse;
+import com.catering.model.dto.ProductsDayDto;
 import com.catering.service.ProductService;
 import com.catering.validator.ProductValidator;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -29,6 +31,7 @@ public class ProductController {
 
     @PutMapping(value = "/product/{productId}/day/{dayName}")
     public ResponseEntity addProductToDayOfWeek(@PathVariable Integer productId, @PathVariable String dayName) {
+        productValidator.validateInputDaysNames(dayName);
         productValidator.validateIfProductIdIsSetInDayOfWeek(productId, dayName);
         productService.addProductToDayOfWeek(productId, dayName);
         return ResponseEntity.ok(productId);
@@ -38,6 +41,12 @@ public class ProductController {
     public ResponseEntity getProductByProductId(@PathVariable Integer productId) {
         productValidator.checkExistenceProductByProductId(productId);
         Product product = productService.getProductByProductId(productId);
+        return ResponseEntity.ok(product);
+    }
+
+    @GetMapping(value = "/products/all")
+    public ResponseEntity getAllProducts() {
+        List<Product> product = productService.getAllProducts();
         return ResponseEntity.ok(product);
     }
 
@@ -51,15 +60,27 @@ public class ProductController {
     @DeleteMapping(value = "/product/{productId}/day/{dayName}")
     public ResponseEntity deleteProductFromDayOfWeek(@PathVariable Integer productId, @PathVariable String dayName) {
         productValidator.checkExistenceProductByProductId(productId);
-        productValidator.checkExistenceProductIdInDayOfWeek(productId);
+        productValidator.checkExistenceProductIdInDayOfWeek(productId, dayName);
         productService.deleteProductFromDayOfWeek(productId, dayName);
         return ResponseEntity.ok(productId);
     }
 
-    @GetMapping(value = "/products/day/{dayName}/list")
-    public ResponseEntity<List<ProductDayDto>> getAllProductsOfDayByDayName(@PathVariable String dayName) {
-        // TODO: 2020-12-29 finish this endpoint, fix problem with mapping object in a repository
-        List<ProductDayDto> productDayDtoList = productService.getAllProductsOfDayByDayName(dayName);
-        return ResponseEntity.ok(productDayDtoList);
+    @GetMapping(value = "/products/day/{dayName}")
+    public ResponseEntity<ProductsOfDayResponse> getAllProductsOfDayByDayName(@PathVariable String dayName) {
+        productValidator.validateInputDaysNames(dayName);
+        ProductsDayDto productsDayDto = productService.getAllProductsOfDayByDayName(dayName);
+        ProductsOfDayResponse productsOfDayResponse = new ProductsOfDayResponse(productsDayDto);
+        return ResponseEntity.ok(productsOfDayResponse);
+    }
+
+    @GetMapping(value = "/products/days/all")
+    public ResponseEntity<List<ProductsOfDayResponse>> getAllProductsOfDayByDayName() {
+        List<ProductsDayDto> productsDayDtoList = productService.getAllProductsFromAllDays();
+        List<ProductsOfDayResponse> responseList = new ArrayList<>();
+
+        for (ProductsDayDto productsDayDto : productsDayDtoList) {
+            responseList.add(new ProductsOfDayResponse(productsDayDto));
+        }
+        return ResponseEntity.ok(responseList);
     }
 }

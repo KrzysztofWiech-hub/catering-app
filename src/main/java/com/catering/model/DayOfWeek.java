@@ -1,6 +1,6 @@
 package com.catering.model;
 
-import com.catering.util.Day;
+import com.catering.constants.Day;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,5 +24,8 @@ public class DayOfWeek {
     private Day dayName;
 
     @JsonIgnore
-    private Integer productId;
+    @ManyToOne()
+    @JoinColumn(name = "product_id")
+    private Product product;
+
 }
