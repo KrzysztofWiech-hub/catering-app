@@ -7,12 +7,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query(value = "SELECT * FROM cateringdb.product PRODUCT WHERE PRODUCT.id = :id",
             nativeQuery = true)
     Product selectProductByProductId(@Param("id") Integer id);
+
+    @Query(value = "SELECT * FROM cateringdb.product PRODUCT",
+            nativeQuery = true)
+    List<Product> selectAllProducts();
 
     @Modifying
     @Query(value = "insert into cateringdb.product (name, description, cost, kcal, mass, height, weight) values (" +
@@ -27,10 +33,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             nativeQuery = true)
     Integer selectExistProductIdInSelectedDayOfWeek(@Param("productId") Integer productId, @Param("dayName") String dayName);
 
-    @Query(value = "SELECT (1) FROM cateringdb.day_of_week DAY_OF_WEEK WHERE" +
-            " DAY_OF_WEEK.product_id = :productId",
+    @Query(value = "SELECT (1) FROM cateringdb.product PRODUCT WHERE" +
+            " PRODUCT.id = :productId",
             nativeQuery = true)
-    Integer selectExistProductByProductId(@Param("productId") Integer productId);
+    Integer checkExistenceProductByProductId(@Param("productId") Integer productId);
 
     @Modifying
     @Query(value = "DELETE PRODUCT FROM cateringdb.product PRODUCT where PRODUCT.id = :productId",

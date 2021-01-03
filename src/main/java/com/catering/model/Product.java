@@ -1,5 +1,6 @@
 package com.catering.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,4 +32,8 @@ public class Product {
 
     private double weight;
 
+    @JsonIgnore
+    @ManyToOne()
+    @JoinColumn(name = "day_name")
+    private DayOfWeek dayOfWeek;
 }

@@ -1,13 +1,14 @@
 package com.catering.service;
 
+import com.catering.constants.Day;
 import com.catering.model.Product;
-import com.catering.model.dayOfWeekDto.ProductDayDto;
+import com.catering.model.dto.ProductsDayDto;
 import com.catering.repository.DaysOfWeekRepository;
 import com.catering.repository.ProductRepository;
-import com.catering.util.Day;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -48,13 +49,18 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.selectProductByProductId(id);
     }
 
+    @Override
+    public List<Product> getAllProducts() {
+        return productRepository.selectAllProducts();
+    }
+
     @Transactional
     @Override
     public void deleteProductByProductId(int productId) {
         boolean isExist = daysOfWeekRepository.existsProductById(productId);
         if (isExist) {
-            productRepository.deleteProductByProductId(productId);
             daysOfWeekRepository.deleteProductFromDaysOfWeek(productId);
+            productRepository.deleteProductByProductId(productId);
         } else {
             productRepository.deleteProductByProductId(productId);
         }
@@ -76,7 +82,48 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDayDto> getAllProductsOfDayByDayName(String dayName) {
-        return daysOfWeekRepository.selectAllProductsOfDayByDayName(dayName);
+    public ProductsDayDto getAllProductsOfDayByDayName(String dayName) {
+        List<Integer> allProductsIdOfDay = daysOfWeekRepository.selectAllProductsIdOfDayByDayName(dayName);
+        List<Product> productList = new ArrayList<>(allProductsIdOfDay.size());
+
+        addProductsOfDayToProductList(allProductsIdOfDay, productList);
+
+        return new ProductsDayDto(dayName, productList);
+    }
+
+    @Override
+    public List<ProductsDayDto> getAllProductsFromAllDays() {
+        List<String> daysNames = Day.getArrayDaysNames();
+        List<ProductsDayDto> responseList = new ArrayList<>();
+
+        for (String dayName : daysNames) {
+            List<Integer> allProductsIdOfDay = daysOfWeekRepository.selectAllProductsIdOfDayByDayName(dayName);
+
+            List<Product> productList = new ArrayList<>(allProductsIdOfDay.size());
+            addProductsOfDayToProductList(allProductsIdOfDay, productList);
+
+            ProductsDayDto productsDayDto = buildProductsOfDayDto(dayName, productList);
+            addProductsOfDayDtoToResponseList(responseList, productsDayDto);
+        }
+        return responseList;
+    }
+
+    private void addProductsOfDayDtoToResponseList(List<ProductsDayDto> responseList, ProductsDayDto productsDayDto) {
+        responseList.add(productsDayDto);
+    }
+
+    private ProductsDayDto buildProductsOfDayDto(String dayName, List<Product> productList) {
+        return new ProductsDayDto(dayName, productList);
+    }
+
+    private void addProductsOfDayToProductList(List<Integer> allProductsIdOfDay, List<Product> productList) {
+        for (Integer productId : allProductsIdOfDay) {
+            Product product = getProductOfDayByProductId(productId);
+            productList.add(product);
+        }
+    }
+
+    private Product getProductOfDayByProductId(Integer productId) {
+        return productRepository.selectProductByProductId(productId);
     }
 }
