@@ -1,0 +1,13 @@
+<div class="d-flex" id="wrapper">
+  <app-sidebar></app-sidebar>
+  <app-content></app-content>
+</div>
+
+ Menu Toggle Script
+<script>
+  $("#menu-toggle").click(function(e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+  });
+</script>
+
