@@ -12,4 +12,15 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+  // toHome() {
+  //   document.ready(function () {
+  //     $('#sidebarCollapse').on('click', function () {
+  //       $('#sidebar').toggleClass('active');
+  //     });
+  //   });
+  //
+  //   document.getElementById('masthead').scrollIntoView({behavior: 'smooth'});
+  // }
+
 }

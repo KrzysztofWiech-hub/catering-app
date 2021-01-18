@@ -1,16 +1,19 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
-import {AppRoutingModule} from './app-routing.module';
+import {AppRoutingModule, routingComponent} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {SidebarComponent} from './components/sidebar/sidebar.component';
-import {ContentComponent} from './components/content/content.component';
+import {HomeComponent} from './components/home/home.component';
+import {AboutComponent} from "./components/about/about.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     SidebarComponent,
-    ContentComponent
+    HomeComponent,
+    AboutComponent,
+    routingComponent
   ],
   imports: [
     BrowserModule,
@@ -19,4 +22,5 @@ import {ContentComponent} from './components/content/content.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
