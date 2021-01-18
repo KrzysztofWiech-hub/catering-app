@@ -1,13 +1,33 @@
-<!-- Sidebar -->
-<div class="bg-light border-right" id="sidebar-wrapper">
-  <div class="sidebar-heading">Start Bootstrap </div>
-  <div class="list-group list-group-flush">
-    <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
-    <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
-    <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
-    <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
-    <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
-    <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+<!-- Sidebar  -->
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <h3>Catering App</h3>
   </div>
-</div>
-<!-- /#sidebar-wrapper -->
+
+  <ul class="list-unstyled components">
+    <!--    <p>Management</p>-->
+    <li>
+      <a class="nav-link" routerLinkActive="active" routerLink="home">Home</a>
+    </li>
+    <li class="active">
+      <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Management</a>
+      <ul class="nav navbar-nav" routerLinkActive="active" id="homeSubmenu">
+        <li>
+          <a class="nav-link" routerLink="add-product">Add product</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a class="nav-link" routerLink="about">About</a>
+    </li>
+  </ul>
+
+  <ul class="list-unstyled CTAs">
+    <li>
+      <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
+    </li>
+    <li>
+      <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
+    </li>
+  </ul>
+</nav>
