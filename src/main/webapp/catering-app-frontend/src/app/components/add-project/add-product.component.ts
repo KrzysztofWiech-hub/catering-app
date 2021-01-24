@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-add-project',
@@ -7,11 +8,32 @@ import {Component, OnInit} from '@angular/core';
 })
 export class AddProductComponent implements OnInit {
 
-  constructor() {
+  model: ProductModel = {
+    name: '',
+    description: '',
+    cost: 0,
+    kcal: 0,
+    mass: 0,
+    height: 0,
+    weight: 0
+  };
+
+  constructor(private http: HttpClient) {
   }
 
   ngOnInit(): void {
+  }
 
+  createProduct(): void {
+    let url = "http://localhost:8080/product";
+    this.http.post(url, this.model).subscribe(
+      res => {
+        location.reload()
+      },
+      error => {
+        alert("Occurred error during creating product")
+      }
+    )
   }
 
   columnDefs = [
@@ -34,4 +56,14 @@ export class AddProductComponent implements OnInit {
     {make: "Porsche", model: "Boxter", price: 72000}
   ];
 
+}
+
+export interface ProductModel {
+  name: string;
+  description: string;
+  cost: number;
+  kcal: number;
+  mass: number;
+  height: number;
+  weight: number;
 }

@@ -8,6 +8,8 @@ import {HomeComponent} from './components/home/home.component';
 import {AboutComponent} from "./components/about/about.component";
 import {AppServiceComponent} from './components/app-service/app-service.component';
 import {AgGridModule} from 'ag-grid-angular';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -20,8 +22,11 @@ import {AgGridModule} from 'ag-grid-angular';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
-    AgGridModule.withComponents([])
+    AgGridModule.withComponents([]),
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
