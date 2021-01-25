@@ -1,0 +1,49 @@
+<!-- Page Content  -->
+<div id="content">
+  <!--  <div class="container">-->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <h2>Days of week</h2>
+      <!--          <button type="button" id="sidebarCollapse" class="btn btn-info">-->
+      <!--            <i class="fas fa-align-left"></i>-->
+      <!--            <span>Toggle Sidebar</span>-->
+      <!--          </button>-->
+      <!--          <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"-->
+      <!--                  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"-->
+      <!--                  aria-label="Toggle navigation">-->
+      <!--            <i class="fas fa-align-justify"></i>-->
+      <!--          </button>-->
+    </div>
+  </nav>
+  <div class="floatLeft">
+    <ag-grid-angular
+      #agGridProduct
+      style="width: 1000px; height: 600px;"
+      class="ag-theme-balham"
+      [rowData]="rowProductData | async"
+      [columnDefs]="productColumnDefs"
+      rowSelection='single'
+    >
+    </ag-grid-angular>
+  </div>
+  <!--GRID-->
+  <div class="floatRight">
+    <ag-grid-angular
+      #agGridDays
+      style="width: 1000px; height: 600px;"
+      class="ag-theme-balham"
+      [rowData]="rowDaysData | async"
+      [columnDefs]="daysColumnDefs"
+      rowSelection='single'
+    >
+    </ag-grid-angular>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('#sidebarCollapse').on('click', function () {
+      $('#sidebar').toggleClass('active');
+    });
+  });
+</script>

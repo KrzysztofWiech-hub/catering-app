@@ -1,10 +1,10 @@
 /*
     DEMO STYLE
 */
-
 @import "~ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
 body {
   font-family: 'Poppins', sans-serif;
   background: #fafafa;
@@ -33,6 +33,7 @@ a:focus {
   border-radius: 0;
   margin-bottom: 40px;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  width: 125%;
 }
 
 .navbar-btn {
@@ -61,6 +62,7 @@ a:focus {
 #sidebar {
   min-width: 250px;
   max-width: 250px;
+  height: 100%;
   background: #7386D5;
   color: #fff;
   transition: all 0.3s;
@@ -96,7 +98,7 @@ a:focus {
   background: #fff;
 }
 
-#sidebar ul li.active>a,
+#sidebar ul li.active > a,
 a[aria-expanded="true"] {
   color: #fff;
   background: #6d7fcc;
@@ -154,6 +156,28 @@ a.article:hover {
   transition: all 0.3s;
 }
 
+.container {
+  width: 100%;
+  padding: 20px;
+  min-height: 50%;
+  transition: all 0.3s;
+  overflow: hidden;
+}
+
+.floatLeft {
+  width: 50%;
+  float: left;
+}
+
+.floatRight {
+  width: 50%;
+  float: right;
+}
+
+/*.row {*/
+/*  width: 600px;*/
+/*}*/
+
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
@@ -162,9 +186,11 @@ a.article:hover {
   #sidebar {
     margin-left: -250px;
   }
+
   #sidebar.active {
     margin-left: 0;
   }
+
   #sidebarCollapse span {
     display: none;
   }
