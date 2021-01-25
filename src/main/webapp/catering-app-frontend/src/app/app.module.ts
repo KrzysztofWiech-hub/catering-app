@@ -10,6 +10,7 @@ import {AppServiceComponent} from './components/app-service/app-service.componen
 import {AgGridModule} from 'ag-grid-angular';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import {DaysOfWeekComponent} from './components/days-of-week/days-of-week.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {HttpClientModule} from "@angular/common/http";
     HomeComponent,
     AboutComponent,
     routingComponent,
-    AppServiceComponent
+    AppServiceComponent,
+    DaysOfWeekComponent
   ],
   imports: [
     BrowserModule,

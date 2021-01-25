@@ -1,0 +1,109 @@
+<!-- Page Content  -->
+<div id="content">
+  <!--  <div class="container">-->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <h2>Create product</h2>
+<!--          <button type="button" id="sidebarCollapse" class="btn btn-info">-->
+<!--            <i class="fas fa-align-left"></i>-->
+<!--            <span>Toggle Sidebar</span>-->
+<!--          </button>-->
+<!--          <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"-->
+<!--                  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"-->
+<!--                  aria-label="Toggle navigation">-->
+<!--            <i class="fas fa-align-justify"></i>-->
+<!--          </button>-->
+        </div>
+      </nav>
+  <div class="floatLeft">
+    <div class="row">
+      <div class="offset-3"></div>
+      <div class="col-md-6">
+        <!--    FORM-->
+        <form name="form" #f="ngForm" (submit)="createProduct()" novalidate class="feedback-form">
+          <!--        NAME-->
+          <div class="form-group">
+            <label for="name">Product name</label>
+            <input class="form-control"
+                   placeholder="Product name"
+                   type="text"
+                   id="name"
+                   name="name"
+                   [(ngModel)]="model.name"/>
+          </div>
+          <!--        DESC-->
+          <div class="form-group">
+            <label for="description">Product description</label>
+            <textarea
+              class="form-control"
+              placeholder="Product description"
+              type="text"
+              id="description"
+              name="description"
+              rows="5"
+              [(ngModel)]="model.description">
+            </textarea>
+          </div>
+          <!--        COST-->
+          <div class="form-group">
+            <label for="cost">Cost</label>
+            <input class="form-control"
+                   placeholder="Cost"
+                   type="text"
+                   id="cost"
+                   name="cost"
+                   [(ngModel)]="model.cost"/>
+          </div>
+          <!--        KCAL-->
+          <div class="form-group">
+            <label for="kcal">KCAL</label>
+            <input class="form-control"
+                   placeholder="Kcal"
+                   type="text"
+                   id="kcal"
+                   name="kcal"
+                   [(ngModel)]="model.kcal"/>
+          </div>
+          <!--        MASS-->
+          <div class="form-group">
+            <label for="mass">Mass</label>
+            <input class="form-control"
+                   placeholder="Mass"
+                   type="text"
+                   id="mass"
+                   name="mass"
+                   [(ngModel)]="model.mass"/>
+          </div>
+
+          <!--          BUTTON-->
+          <button type="submit" class="btn btn-info pull-right">
+            <i class="fa fa-envelope-o"></i>
+            <span>Create</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!--GRID-->
+  <div class="floatRight">
+      <button class="alert-danger" (click)="deleteProduct()">Delete product</button>
+      <ag-grid-angular
+        #agGrid
+        style="width: 1000px; height: 600px;"
+        class="ag-theme-balham"
+        [rowData]="rowData | async"
+        [columnDefs]="columnDefs"
+        rowSelection='single'
+      >
+      </ag-grid-angular>
+    </div>
+  </div>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('#sidebarCollapse').on('click', function () {
+      $('#sidebar').toggleClass('active');
+    });
+  });
+</script>
+<!--</div>-->
