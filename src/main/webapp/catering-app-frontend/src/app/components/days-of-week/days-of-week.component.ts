@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AgGridAngular} from "ag-grid-angular";
 import {HttpClient} from "@angular/common/http";
+import {DaysData} from "./DaysData";
 
 @Component({
   selector: 'app-days-of-week',
@@ -12,35 +13,62 @@ export class DaysOfWeekComponent implements OnInit {
   @ViewChild('agGridProduct') agGridProduct: AgGridAngular;
   @ViewChild('agGridDays') agGridDays: AgGridAngular;
 
+  public daysData: DaysData | undefined;
+  public rowData: any;
+
+  rowProductData: any;
+  rowDaysData: any;
+
   constructor(private http: HttpClient) {
   }
 
   ngOnInit(): void {
     this.rowProductData = this.http.get("http://localhost:8080/products/all");
-    this.rowDaysData = this.http.get("http://localhost:8080/products/days/all")
+    this.rowDaysData = this.http.get("http://localhost:8080/products/days/all").subscribe(
+      x => {
+        this.daysData = x;
+        Object.values(this.daysData).filter(x => x).forEach(x => {
+          this.extractedOneDayWithOneProductOfArrays(x);
+        });
+      }
+    );
   }
 
-  rowProductData: any;
-  rowDaysData: any;
+  private extractedOneDayWithOneProductOfArrays(x) {
+    let currDay = x.dayName;
 
-  modelProduct: ProductModel = {
-    name: '',
-    description: '',
-    cost: null,
-    kcal: null,
-    mass: null,
-    height: null,
-    weight: null
-  };
+    let productName = '';
+    let description = '';
+    let cost = undefined;
 
-  modelDays: DaysModel = {
-    dayName: ''
-  };
+    if (x.productList.length === 0) {
+      this.update(currDay, undefined, undefined, undefined)
 
-  getSelectedProductId() {
-    const selectedNodes = this.agGridProduct.api.getSelectedNodes();
-    return selectedNodes.map(node => node.data.id)
+    } else {
+      for (let productModel of x.productList) {
+        productName = productModel.name;
+        description = productModel.description;
+        cost = productModel.cost;
+        this.update(currDay, productName, description, cost)
+      }
+    }
   }
+
+  public update(dayName: string, name: string, desc: string, cost: number): void {
+    this.agGridDays.api.updateRowData({
+      add: [{
+        dayName: dayName,
+        make: name,
+        model: desc,
+        price: cost
+      }]
+    });
+  }
+
+  // getSelectedProductId() {
+  //   const selectedNodes = this.agGridProduct.api.getSelectedNodes();
+  //   return selectedNodes.map(node => node.data.id)
+  // }
 
   productColumnDefs = [
     {
@@ -48,7 +76,7 @@ export class DaysOfWeekComponent implements OnInit {
       field: "id",
       sortable: true,
       filter: true,
-      maxWidth: 40
+      maxWidth: 60
     },
     {
       headerName: "Product name",
@@ -82,53 +110,20 @@ export class DaysOfWeekComponent implements OnInit {
 
   daysColumnDefs = [
     {
-      field: 'country',
+      field: 'dayName',
       rowGroup: true,
-      hide: true,
+      hide: false,
+    }
+    ,
+    {
+      field: "make"
     },
     {
-      field: 'year',
-      rowGroup: true,
-      hide: true,
+      field: 'model',
+      // rowGroup: true
     },
     {
-      field: 'sport',
-      minWidth: 200,
-    },
-    {
-      field: 'athlete',
-      minWidth: 200,
-    },
-    { field: 'gold' },
-    { field: 'silver' },
-    { field: 'bronze' },
-    { field: 'total' },
-    { field: 'age' },
-    {
-      field: 'date',
-      minWidth: 140,
-    },
+      field: "price"
+    }
   ];
-
-
-}
-
-export interface ProductModel {
-  name: string;
-  description: string;
-  cost: number;
-  kcal: number;
-  mass: number;
-  height: number;
-  weight: number;
-}
-
-export interface DaysModel {
-  dayName: string;
-  // description: string;
-  // cost: number;
-  // kcal: number;
-  // mass: number;
-  // height: number;
-  // weight: number;
 }

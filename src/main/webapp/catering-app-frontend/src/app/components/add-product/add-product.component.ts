@@ -24,6 +24,8 @@ export class AddProductComponent implements OnInit {
   constructor(private http: HttpClient) {
   }
 
+  rowData: any;
+
   ngOnInit(): void {
     this.rowData = this.http.get("http://localhost:8080/products/all")
   }
@@ -65,7 +67,7 @@ export class AddProductComponent implements OnInit {
       field: "id",
       sortable: true,
       filter: true,
-      maxWidth: 40
+      maxWidth: 60
     },
     {
       headerName: "Product name",
@@ -96,8 +98,6 @@ export class AddProductComponent implements OnInit {
       sortable: true,
       maxWidth: 100
     }];
-
-  rowData: any;
 
 }
 
