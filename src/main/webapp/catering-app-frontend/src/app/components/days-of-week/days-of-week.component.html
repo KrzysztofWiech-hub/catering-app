@@ -18,9 +18,10 @@
   <div class="floatLeft">
     <ag-grid-angular
       #agGridProduct
-      style="width: 1000px; height: 600px;"
+      style="width: 1150px; height: 600px;"
       class="ag-theme-balham"
-      [rowData]="rowProductData | async"
+    (cellValueChanged)="onCellValueChanged($event)"
+    [rowData]="rowProductData | async"
       [columnDefs]="productColumnDefs"
       rowSelection='single'
     >
@@ -30,21 +31,14 @@
   <div class="floatRight">
     <ag-grid-angular
       #agGridDays
-      style="width: 1000px; height: 600px;"
+      style="width: 1300px; height: 600px;"
       class="ag-theme-balham"
-      [rowData]="rowData | async"
+      [rowData]="rowDaysData | async"
       [columnDefs]="daysColumnDefs"
       rowSelection='single'
     >
     </ag-grid-angular>
   </div>
 </div>
-
-
-<script type="text/javascript">
-  $(document).ready(function () {
-    $('#sidebarCollapse').on('click', function () {
-      $('#sidebar').toggleClass('active');
-    });
-  });
-</script>
+<!--[autoGroupColumnDef]="autoGroupColumnDef"-->
+<!--(cellValueChanged)="onCellValueChanged($event)"-->
